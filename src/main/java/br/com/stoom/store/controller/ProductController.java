@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<ProductGetDto> createProduct(@RequestBody ProductPostDto productPostDto) {
+    public ResponseEntity<ProductGetDto> createProduct(@Valid @RequestBody ProductPostDto productPostDto) {
         Product newProduct = productService.saveProduct(
                 mapstructMapper.productPostDtoToProduct(productPostDto)
         );

@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,7 @@ public class BrandController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<BrandGetDto> createBrand(@RequestBody BrandPostDto brandPostDto) {
+    public ResponseEntity<BrandGetDto> createBrand(@Valid @RequestBody BrandPostDto brandPostDto) {
         Brand newBrand = brandService.saveBrand(
                 mapstructMapper.brandPostDtoToBrand(brandPostDto)
         );

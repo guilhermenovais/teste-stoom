@@ -2,13 +2,14 @@ package br.com.stoom.store.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 public class CategoryPostDto {
-    @NonNull
+    @NotNull
     @JsonProperty("name")
     private String name;
 }

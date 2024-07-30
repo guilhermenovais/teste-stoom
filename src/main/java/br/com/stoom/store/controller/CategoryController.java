@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,7 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<CategoryGetDto> createCategory(@RequestBody CategoryPostDto categoryPostDto) {
+    public ResponseEntity<CategoryGetDto> createCategory(@Valid @RequestBody CategoryPostDto categoryPostDto) {
         Category newCategory = categoryService.saveCategory(
                 mapstructMapper.categoryPostDtoToCategory(categoryPostDto)
         );
