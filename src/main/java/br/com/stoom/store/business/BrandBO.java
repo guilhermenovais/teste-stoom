@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BrandBO implements IBrandBO {
@@ -15,7 +16,14 @@ public class BrandBO implements IBrandBO {
     private BrandRepository brandRepository;
 
     @Override
-    public List<Brand> findAll() { return brandRepository.findAll(); }
+    public List<Brand> findAll() {
+        return brandRepository.findAll();
+    }
+
+    @Override
+    public Optional<Brand> getBrand(Long id) {
+        return brandRepository.findById(id);
+    }
 
     @Override
     public Brand saveBrand(Brand brand) {

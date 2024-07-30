@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = {"/api/brands"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,6 +37,17 @@ public class BrandController {
             return ResponseEntity.ok(allBrandsDto);
         else
             return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BrandGetDto> getBrand(@PathVariable("id") Long id) {
+        Optional<Brand> brand = brandService.getBrand(id);
+        if (!brand.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        BrandGetDto brandDto = mapstructMapper.brandToBrandGetDto(brand.get());
+        logger.info(brandDto.toString());
+        return ResponseEntity.ok(brandDto);
     }
 
     @PostMapping(value = "/")
