@@ -5,20 +5,21 @@ import br.com.stoom.store.data.dto.ProductGetDto;
 import br.com.stoom.store.data.dto.ProductPostDto;
 import br.com.stoom.store.data.mappers.MapStructMapper;
 import br.com.stoom.store.data.model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/products")
+@RestController
+@RequestMapping(path = {"/api/products"}, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private MapStructMapper mapstructMapper;
@@ -28,9 +29,11 @@ public class ProductController {
 
     @GetMapping(value = "/")
     public ResponseEntity<List<ProductGetDto>> findAll() {
-        List<Product> p = productService.findAll();
-        if(!p.isEmpty())
-            return new ResponseEntity<>(mapstructMapper.productsToProductsGetDto(p), HttpStatus.OK);
+        List<Product> allProducts = productService.findAll();
+        List<ProductGetDto> allProductsDto = mapstructMapper.productsToProductsGetDto(allProducts);
+        logger.info(allProductsDto.toString());
+        if(!allProductsDto.isEmpty())
+            return new ResponseEntity<>(allProductsDto, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -40,6 +43,8 @@ public class ProductController {
         Product newProduct = productService.saveProduct(
                 mapstructMapper.productPostDtoToProduct(productPostDto)
         );
-        return new ResponseEntity<>(mapstructMapper.productToProductGetDto(newProduct), HttpStatus.OK);
+        ProductGetDto newProductDto = mapstructMapper.productToProductGetDto(newProduct);
+        logger.info(newProductDto.toString());
+        return new ResponseEntity<>(newProductDto, HttpStatus.OK);
     }
 }

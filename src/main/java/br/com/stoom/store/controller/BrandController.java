@@ -5,20 +5,21 @@ import br.com.stoom.store.data.dto.BrandGetDto;
 import br.com.stoom.store.data.dto.BrandPostDto;
 import br.com.stoom.store.data.mappers.MapStructMapper;
 import br.com.stoom.store.data.model.Brand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/brands")
+@RestController
+@RequestMapping(path = {"/api/brands"}, produces = MediaType.APPLICATION_JSON_VALUE)
 public class BrandController {
+
+    private static final Logger logger = LoggerFactory.getLogger(BrandController.class);
 
     @Autowired
     private MapStructMapper mapstructMapper;
@@ -28,9 +29,11 @@ public class BrandController {
 
     @GetMapping(value = "/")
     public ResponseEntity<List<BrandGetDto>> findAll() {
-        List<Brand> b = brandService.findAll();
-        if(!b.isEmpty())
-            return new ResponseEntity<>(mapstructMapper.brandsToBrandsGetDto(b), HttpStatus.OK);
+        List<Brand> allBrands = brandService.findAll();
+        List<BrandGetDto> allBrandsDto = mapstructMapper.brandsToBrandsGetDto(allBrands);
+        logger.info(allBrandsDto.toString());
+        if(!allBrandsDto.isEmpty())
+            return new ResponseEntity<>(allBrandsDto, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -40,6 +43,8 @@ public class BrandController {
         Brand newBrand = brandService.saveBrand(
                 mapstructMapper.brandPostDtoToBrand(brandPostDto)
         );
-        return new ResponseEntity<>(mapstructMapper.brandToBrandGetDto(newBrand), HttpStatus.OK);
+        BrandGetDto newBrandDto = mapstructMapper.brandToBrandGetDto(newBrand);
+        logger.info(newBrandDto.toString());
+        return new ResponseEntity<>(newBrandDto, HttpStatus.OK);
     }
 }

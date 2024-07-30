@@ -5,20 +5,21 @@ import br.com.stoom.store.data.dto.CategoryGetDto;
 import br.com.stoom.store.data.dto.CategoryPostDto;
 import br.com.stoom.store.data.mappers.MapStructMapper;
 import br.com.stoom.store.data.model.Category;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/categories")
+@RestController
+@RequestMapping(path = {"/api/categories"}, produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     @Autowired
     private MapStructMapper mapstructMapper;
@@ -28,9 +29,11 @@ public class CategoryController {
 
     @GetMapping(value = "/")
     public ResponseEntity<List<CategoryGetDto>> findAll() {
-        List<Category> c = categoryService.findAll();
-        if(!c.isEmpty())
-            return new ResponseEntity<>(mapstructMapper.categoriesToCategoriesGetDto(c), HttpStatus.OK);
+        List<Category> allCategories = categoryService.findAll();
+        List<CategoryGetDto> allCategoriesDto = mapstructMapper.categoriesToCategoriesGetDto(allCategories);
+        logger.info(allCategoriesDto.toString());
+        if(!allCategoriesDto.isEmpty())
+            return new ResponseEntity<>(allCategoriesDto, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -40,6 +43,8 @@ public class CategoryController {
         Category newCategory = categoryService.saveCategory(
                 mapstructMapper.categoryPostDtoToCategory(categoryPostDto)
         );
-        return new ResponseEntity<>(mapstructMapper.categoryToCategoryGetDto(newCategory), HttpStatus.OK);
+        CategoryGetDto newCategoryDto = mapstructMapper.categoryToCategoryGetDto(newCategory);
+        logger.info(newCategoryDto.toString());
+        return new ResponseEntity<>(newCategoryDto, HttpStatus.OK);
     }
 }
