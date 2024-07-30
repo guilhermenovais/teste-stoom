@@ -19,4 +19,8 @@ public class ProductBO implements IProductBO {
         return productRepository.findAll();
     }
 
+    @Override
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
 }

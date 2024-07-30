@@ -8,4 +8,5 @@ public interface IProductBO {
 
     List<Product> findAll();
 
+    Product saveProduct(Product product);
 }
