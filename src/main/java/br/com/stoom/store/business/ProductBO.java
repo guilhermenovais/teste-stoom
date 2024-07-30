@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductBO implements IProductBO {
@@ -22,5 +23,13 @@ public class ProductBO implements IProductBO {
     @Override
     public Product saveProduct(Product product) {
         return productRepository.save(product);
+    }
+
+    @Override
+    public Optional<Product> updateProduct(Long id, Product product) {
+        Optional<Product> productToUpdate = productRepository.findById(id);
+        if(!productToUpdate.isPresent()) return productToUpdate;
+        product.setId(id);
+        return Optional.of(productRepository.save(product));
     }
 }

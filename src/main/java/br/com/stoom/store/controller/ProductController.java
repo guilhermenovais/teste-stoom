@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = {"/api/products"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,5 +48,22 @@ public class ProductController {
         ProductGetDto newProductDto = mapstructMapper.productToProductGetDto(newProduct);
         logger.info(newProductDto.toString());
         return new ResponseEntity<>(newProductDto, HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<ProductGetDto> updateProduct(
+            @PathVariable(value = "id") Long id,
+            @Valid @RequestBody ProductPostDto productPostDto
+    ) {
+        Optional<Product> updatedProduct = productService.updateProduct(
+                id,
+                mapstructMapper.productPostDtoToProduct(productPostDto)
+        );
+        if(!updatedProduct.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        ProductGetDto updatedProductDto = mapstructMapper.productToProductGetDto(updatedProduct.get());
+        logger.info(updatedProductDto.toString());
+        return new ResponseEntity<>(updatedProductDto, HttpStatus.OK);
     }
 }
