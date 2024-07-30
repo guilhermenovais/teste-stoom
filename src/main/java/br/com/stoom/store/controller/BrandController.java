@@ -59,4 +59,21 @@ public class BrandController {
         logger.info(newBrandDto.toString());
         return ResponseEntity.ok(newBrandDto);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BrandGetDto> updateBrand(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody BrandPostDto brandPostDto
+    ) {
+        Optional<Brand> updatedBrand = brandService.updateBrand(
+                id,
+                mapstructMapper.brandPostDtoToBrand(brandPostDto)
+        );
+        if (!updatedBrand.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        BrandGetDto updatedBrandDto = mapstructMapper.brandToBrandGetDto(updatedBrand.get());
+        logger.info(updatedBrandDto.toString());
+        return ResponseEntity.ok(updatedBrandDto);
+    }
 }

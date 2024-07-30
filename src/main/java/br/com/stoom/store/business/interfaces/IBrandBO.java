@@ -11,4 +11,6 @@ public interface IBrandBO {
     Optional<Brand> getBrand(Long id);
 
     Brand saveBrand(Brand brand);
+
+    Optional<Brand> updateBrand(Long id, Brand brand);
 }

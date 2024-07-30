@@ -29,4 +29,12 @@ public class BrandBO implements IBrandBO {
     public Brand saveBrand(Brand brand) {
         return brandRepository.save(brand);
     }
+
+    @Override
+    public Optional<Brand> updateBrand(Long id, Brand brand) {
+        Optional<Brand> brandToUpdate = brandRepository.findById(id);
+        if (!brandToUpdate.isPresent()) return brandToUpdate;
+        brand.setId(id);
+        return Optional.of(brandRepository.save(brand));
+    }
 }
