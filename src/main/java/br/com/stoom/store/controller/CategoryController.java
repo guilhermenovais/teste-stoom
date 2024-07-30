@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = {"/api/categories"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,6 +37,19 @@ public class CategoryController {
             return ResponseEntity.ok(allCategoriesDto);
         else
             return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CategoryGetDto> getCategory(
+            @PathVariable(value = "id") Long id
+    ) {
+        Optional<Category> category = categoryService.getCategory(id);
+        if(!category.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        CategoryGetDto categoryDto = mapstructMapper.categoryToCategoryGetDto(category.get());
+        logger.info(categoryDto.toString());
+        return ResponseEntity.ok(categoryDto);
     }
 
     @PostMapping(value = "/")
