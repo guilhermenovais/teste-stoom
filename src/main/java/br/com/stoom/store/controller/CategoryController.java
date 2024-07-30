@@ -8,7 +8,6 @@ import br.com.stoom.store.data.model.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +33,9 @@ public class CategoryController {
         List<CategoryGetDto> allCategoriesDto = mapstructMapper.categoriesToCategoriesGetDto(allCategories);
         logger.info(allCategoriesDto.toString());
         if(!allCategoriesDto.isEmpty())
-            return new ResponseEntity<>(allCategoriesDto, HttpStatus.OK);
+            return ResponseEntity.ok(allCategoriesDto);
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
     }
 
     @PostMapping(value = "/")
@@ -46,6 +45,6 @@ public class CategoryController {
         );
         CategoryGetDto newCategoryDto = mapstructMapper.categoryToCategoryGetDto(newCategory);
         logger.info(newCategoryDto.toString());
-        return new ResponseEntity<>(newCategoryDto, HttpStatus.OK);
+        return ResponseEntity.ok(newCategoryDto);
     }
 }

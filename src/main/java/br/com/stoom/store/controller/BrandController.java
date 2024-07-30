@@ -8,7 +8,6 @@ import br.com.stoom.store.data.model.Brand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +33,9 @@ public class BrandController {
         List<BrandGetDto> allBrandsDto = mapstructMapper.brandsToBrandsGetDto(allBrands);
         logger.info(allBrandsDto.toString());
         if(!allBrandsDto.isEmpty())
-            return new ResponseEntity<>(allBrandsDto, HttpStatus.OK);
+            return ResponseEntity.ok(allBrandsDto);
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
     }
 
     @PostMapping(value = "/")
@@ -46,6 +45,6 @@ public class BrandController {
         );
         BrandGetDto newBrandDto = mapstructMapper.brandToBrandGetDto(newBrand);
         logger.info(newBrandDto.toString());
-        return new ResponseEntity<>(newBrandDto, HttpStatus.OK);
+        return ResponseEntity.ok(newBrandDto);
     }
 }

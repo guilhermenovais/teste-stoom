@@ -8,7 +8,6 @@ import br.com.stoom.store.data.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +34,9 @@ public class ProductController {
         List<ProductGetDto> allProductsDto = mapstructMapper.productsToProductsGetDto(allProducts);
         logger.info(allProductsDto.toString());
         if(!allProductsDto.isEmpty())
-            return new ResponseEntity<>(allProductsDto, HttpStatus.OK);
+            return ResponseEntity.ok(allProductsDto);
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
     }
 
     @PostMapping(value = "/")
@@ -47,7 +46,7 @@ public class ProductController {
         );
         ProductGetDto newProductDto = mapstructMapper.productToProductGetDto(newProduct);
         logger.info(newProductDto.toString());
-        return new ResponseEntity<>(newProductDto, HttpStatus.OK);
+        return ResponseEntity.ok(newProductDto);
     }
 
     @PutMapping(path = "/{id}")
@@ -64,6 +63,6 @@ public class ProductController {
         }
         ProductGetDto updatedProductDto = mapstructMapper.productToProductGetDto(updatedProduct.get());
         logger.info(updatedProductDto.toString());
-        return new ResponseEntity<>(updatedProductDto, HttpStatus.OK);
+        return ResponseEntity.ok(updatedProductDto);
     }
 }
