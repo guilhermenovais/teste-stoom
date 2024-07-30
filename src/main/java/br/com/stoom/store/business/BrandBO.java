@@ -37,4 +37,11 @@ public class BrandBO implements IBrandBO {
         brand.setId(id);
         return Optional.of(brandRepository.save(brand));
     }
+
+    @Override
+    public Optional<Brand> deleteBrand(Long id) {
+        Optional<Brand> brandToDelete = brandRepository.findById(id);
+        brandToDelete.ifPresent(brand -> brandRepository.delete(brand));
+        return brandToDelete;
+    }
 }

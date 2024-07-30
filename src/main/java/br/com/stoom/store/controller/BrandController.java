@@ -76,4 +76,15 @@ public class BrandController {
         logger.info(updatedBrandDto.toString());
         return ResponseEntity.ok(updatedBrandDto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BrandGetDto> deleteBrand(@PathVariable("id") Long id) {
+        Optional<Brand> deletedBrand = brandService.deleteBrand(id);
+        if (!deletedBrand.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        BrandGetDto deletedBrandDto = mapstructMapper.brandToBrandGetDto(deletedBrand.get());
+        logger.info(deletedBrandDto.toString());
+        return ResponseEntity.ok(deletedBrandDto);
+    }
 }

@@ -13,4 +13,6 @@ public interface IBrandBO {
     Brand saveBrand(Brand brand);
 
     Optional<Brand> updateBrand(Long id, Brand brand);
+
+    Optional<Brand> deleteBrand(Long id);
 }
