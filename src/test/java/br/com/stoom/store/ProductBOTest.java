@@ -1,9 +1,9 @@
 package br.com.stoom.store;
 
 import br.com.stoom.store.business.ProductBO;
-import br.com.stoom.store.model.Brand;
-import br.com.stoom.store.model.Category;
-import br.com.stoom.store.model.Product;
+import br.com.stoom.store.data.model.Brand;
+import br.com.stoom.store.data.model.Category;
+import br.com.stoom.store.data.model.Product;
 import br.com.stoom.store.repository.BrandRepository;
 import br.com.stoom.store.repository.CategoryRepository;
 import br.com.stoom.store.repository.ProductRepository;

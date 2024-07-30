@@ -1,4 +1,4 @@
-package br.com.stoom.store.model;
+package br.com.stoom.store.data.model;
 
 import lombok.Getter;
 import lombok.Setter;

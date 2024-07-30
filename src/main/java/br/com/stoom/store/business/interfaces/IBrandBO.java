@@ -1,6 +1,6 @@
 package br.com.stoom.store.business.interfaces;
 
-import br.com.stoom.store.model.Brand;
+import br.com.stoom.store.data.model.Brand;
 
 import java.util.List;
 

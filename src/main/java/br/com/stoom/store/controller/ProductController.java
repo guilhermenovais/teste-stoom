@@ -1,7 +1,7 @@
 package br.com.stoom.store.controller;
 
 import br.com.stoom.store.business.ProductBO;
-import br.com.stoom.store.model.Product;
+import br.com.stoom.store.data.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

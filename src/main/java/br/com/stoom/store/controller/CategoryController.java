@@ -1,9 +1,7 @@
 package br.com.stoom.store.controller;
 
 import br.com.stoom.store.business.CategoryBO;
-import br.com.stoom.store.model.Category;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import br.com.stoom.store.data.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package br.com.stoom.store.business;
 
 import br.com.stoom.store.business.interfaces.ICategoryBO;
-import br.com.stoom.store.model.Category;
+import br.com.stoom.store.data.model.Category;
 import br.com.stoom.store.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

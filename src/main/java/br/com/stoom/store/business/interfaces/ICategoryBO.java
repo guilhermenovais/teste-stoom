@@ -1,6 +1,6 @@
 package br.com.stoom.store.business.interfaces;
 
-import br.com.stoom.store.model.Category;
+import br.com.stoom.store.data.model.Category;
 
 import java.util.List;
 
