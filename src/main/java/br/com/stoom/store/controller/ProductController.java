@@ -65,4 +65,17 @@ public class ProductController {
         logger.info(updatedProductDto.toString());
         return ResponseEntity.ok(updatedProductDto);
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<ProductGetDto> deleteProduct(
+            @PathVariable(value = "id") Long id
+    ) {
+        Optional<Product> deletedProduct = productService.deleteProduct(id);
+        if(!deletedProduct.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        ProductGetDto deletedProductDto = mapstructMapper.productToProductGetDto(deletedProduct.get());
+        logger.info(deletedProductDto.toString());
+        return ResponseEntity.ok(deletedProductDto);
+    }
 }

@@ -32,4 +32,11 @@ public class ProductBO implements IProductBO {
         product.setId(id);
         return Optional.of(productRepository.save(product));
     }
+
+    @Override
+    public Optional<Product> deleteProduct(Long id) {
+        Optional<Product> productToDelete = productRepository.findById(id);
+        productToDelete.ifPresent(product -> productRepository.delete(product));
+        return productToDelete;
+    }
 }

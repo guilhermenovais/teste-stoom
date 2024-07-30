@@ -12,4 +12,6 @@ public interface IProductBO {
     Product saveProduct(Product product);
 
     Optional<Product> updateProduct(Long id, Product product);
+
+    Optional<Product> deleteProduct(Long id);
 }
