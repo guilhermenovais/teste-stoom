@@ -39,6 +39,19 @@ public class ProductController {
             return ResponseEntity.notFound().build();
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ProductGetDto> getProduct(
+            @PathVariable(value = "id") Long id
+    ) {
+        Optional<Product> product = productService.getProduct(id);
+        if(!product.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        ProductGetDto productDto = mapstructMapper.productToProductGetDto(product.get());
+        logger.info(productDto.toString());
+        return ResponseEntity.ok(productDto);
+    }
+
     @PostMapping(value = "/")
     public ResponseEntity<ProductGetDto> createProduct(@Valid @RequestBody ProductPostDto productPostDto) {
         Product newProduct = productService.saveProduct(

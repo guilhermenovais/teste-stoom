@@ -9,6 +9,8 @@ public interface IProductBO {
 
     List<Product> findAll();
 
+    Optional<Product> getProduct(Long id);
+
     Product saveProduct(Product product);
 
     Optional<Product> updateProduct(Long id, Product product);

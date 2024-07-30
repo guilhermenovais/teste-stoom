@@ -16,8 +16,13 @@ public class ProductBO implements IProductBO {
     private ProductRepository productRepository;
 
     @Override
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public Optional<Product> getProduct(Long id) {
+        return productRepository.findById(id);
     }
 
     @Override
