@@ -29,4 +29,12 @@ public class CategoryBO implements ICategoryBO {
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
     }
+
+    @Override
+    public Optional<Category> updateCategory(Long id, Category category) {
+        Optional<Category> categoryToUpdate = categoryRepository.findById(id);
+        if(!categoryToUpdate.isPresent()) return categoryToUpdate;
+        category.setId(id);
+        return Optional.of(categoryRepository.save(category));
+    }
 }

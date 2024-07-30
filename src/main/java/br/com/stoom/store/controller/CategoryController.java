@@ -61,4 +61,21 @@ public class CategoryController {
         logger.info(newCategoryDto.toString());
         return ResponseEntity.ok(newCategoryDto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CategoryGetDto> putCategory(
+            @PathVariable(value = "id") Long id,
+            @Valid @RequestBody CategoryPostDto categoryPostDto
+    ) {
+        Optional<Category> updatedCategory = categoryService.updateCategory(
+                id,
+                mapstructMapper.categoryPostDtoToCategory(categoryPostDto)
+        );
+        if(!updatedCategory.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        CategoryGetDto updatedCategoryDto = mapstructMapper.categoryToCategoryGetDto(updatedCategory.get());
+        logger.info(updatedCategoryDto.toString());
+        return ResponseEntity.ok(updatedCategoryDto);
+    }
 }

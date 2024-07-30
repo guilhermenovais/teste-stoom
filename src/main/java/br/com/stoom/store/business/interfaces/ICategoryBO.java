@@ -12,4 +12,6 @@ public interface ICategoryBO {
     Optional<Category> getCategory(Long id);
 
     Category saveCategory(Category category);
+
+    Optional<Category> updateCategory(Long id, Category category);
 }
