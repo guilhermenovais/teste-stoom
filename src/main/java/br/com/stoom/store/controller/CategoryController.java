@@ -78,4 +78,17 @@ public class CategoryController {
         logger.info(updatedCategoryDto.toString());
         return ResponseEntity.ok(updatedCategoryDto);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<CategoryGetDto> deleteCategory(
+            @PathVariable(value = "id") Long id
+    ) {
+        Optional<Category> deletedCategory = categoryService.deleteCategory(id);
+        if(!deletedCategory.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        CategoryGetDto deletedCategoryDto = mapstructMapper.categoryToCategoryGetDto(deletedCategory.get());
+        logger.info(deletedCategoryDto.toString());
+        return ResponseEntity.ok(deletedCategoryDto);
+    }
 }

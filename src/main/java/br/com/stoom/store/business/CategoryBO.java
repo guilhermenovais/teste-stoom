@@ -37,4 +37,11 @@ public class CategoryBO implements ICategoryBO {
         category.setId(id);
         return Optional.of(categoryRepository.save(category));
     }
+
+    @Override
+    public Optional<Category> deleteCategory(Long id) {
+        Optional<Category> categoryToDelete = categoryRepository.findById(id);
+        categoryToDelete.ifPresent(category -> categoryRepository.delete(category));
+        return categoryToDelete;
+    }
 }
