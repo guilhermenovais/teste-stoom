@@ -1,6 +1,9 @@
 package br.com.stoom.store.controller;
 
 import br.com.stoom.store.business.CategoryBO;
+import br.com.stoom.store.data.dto.CategoryGetDto;
+import br.com.stoom.store.data.dto.CategoryPostDto;
+import br.com.stoom.store.data.mappers.MapStructMapper;
 import br.com.stoom.store.data.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,20 +21,25 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
+    private MapStructMapper mapstructMapper;
+
+    @Autowired
     private CategoryBO categoryService;
 
     @GetMapping(value = "/")
-    public ResponseEntity<List<Category>> findAll() {
+    public ResponseEntity<List<CategoryGetDto>> findAll() {
         List<Category> c = categoryService.findAll();
         if(!c.isEmpty())
-            return new ResponseEntity<>(c, HttpStatus.OK);
+            return new ResponseEntity<>(mapstructMapper.categoriesToCategoriesGetDto(c), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        Category newCategory = categoryService.saveCategory(category);
-        return new ResponseEntity<>(newCategory, HttpStatus.OK);
+    public ResponseEntity<CategoryGetDto> createCategory(@RequestBody CategoryPostDto categoryPostDto) {
+        Category newCategory = categoryService.saveCategory(
+                mapstructMapper.categoryPostDtoToCategory(categoryPostDto)
+        );
+        return new ResponseEntity<>(mapstructMapper.categoryToCategoryGetDto(newCategory), HttpStatus.OK);
     }
 }
