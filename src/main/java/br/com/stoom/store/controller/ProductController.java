@@ -76,6 +76,18 @@ public class ProductController {
         return ResponseEntity.ok(productsDto);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductGetDto>> searchProducts(
+            @RequestParam("query") String query
+    ) {
+        List<Product> products = productService.searchProducts(query);
+        List<ProductGetDto> productsDto = mapstructMapper.productsToProductsGetDto(products);
+        if (productsDto.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(productsDto);
+    }
+
     @PostMapping(value = "/")
     public ResponseEntity<ProductGetDto> createProduct(@Valid @RequestBody ProductPostDto productPostDto) {
         Product newProduct = productService.saveProduct(

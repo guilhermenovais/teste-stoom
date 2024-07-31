@@ -16,6 +16,8 @@ public interface IProductBO {
 
     List<Product> getProductsByBrand(Long brandId);
 
+    List<Product> searchProducts(String query);
+
     Product saveProduct(Product product);
 
     Optional<Product> updateProduct(Long id, Product product);

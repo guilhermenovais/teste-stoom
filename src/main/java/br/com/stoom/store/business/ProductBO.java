@@ -57,6 +57,11 @@ public class ProductBO implements IProductBO {
     }
 
     @Override
+    public List<Product> searchProducts(String query) {
+        return productRepository.searchProducts(query);
+    }
+
+    @Override
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
