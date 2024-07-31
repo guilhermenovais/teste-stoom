@@ -26,4 +26,7 @@ public class ProductGetDto {
 
     @JsonProperty("price")
     private Double price;
+
+    @JsonProperty("enabled")
+    private Boolean enabled = true;
 }

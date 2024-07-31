@@ -12,4 +12,7 @@ public class BrandGetDto {
 
     @JsonProperty("name")
     private String name;
+
+    @JsonProperty("enabled")
+    private Boolean enabled = true;
 }
