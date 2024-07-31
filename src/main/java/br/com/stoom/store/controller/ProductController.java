@@ -52,6 +52,18 @@ public class ProductController {
         return ResponseEntity.ok(productDto);
     }
 
+    @GetMapping("/by-category/{categoryId}")
+    public ResponseEntity<List<ProductGetDto>> listProductsByCategory(
+            @PathVariable("categoryId") Long categoryId
+    ) {
+        List<Product> products = productService.getProductsByCategory(categoryId);
+        List<ProductGetDto> productsDto = mapstructMapper.productsToProductsGetDto(products);
+        if (productsDto.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(productsDto);
+    }
+
     @PostMapping(value = "/")
     public ResponseEntity<ProductGetDto> createProduct(@Valid @RequestBody ProductPostDto productPostDto) {
         Product newProduct = productService.saveProduct(

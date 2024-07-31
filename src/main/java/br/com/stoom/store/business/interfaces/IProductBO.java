@@ -1,5 +1,6 @@
 package br.com.stoom.store.business.interfaces;
 
+import br.com.stoom.store.data.model.Category;
 import br.com.stoom.store.data.model.Product;
 
 import java.util.List;
@@ -10,6 +11,8 @@ public interface IProductBO {
     List<Product> findAll();
 
     Optional<Product> getProduct(Long id);
+
+    List<Product> getProductsByCategory(Long categoryId);
 
     Product saveProduct(Product product);
 
