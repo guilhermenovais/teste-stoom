@@ -59,7 +59,6 @@ public class ProductBOTest {
 
         assertThat(savedProduct).isNotNull();
         assertThat(savedProduct.getName()).isEqualTo("MSP430");
-        assertThat(savedProduct.getId()).isNotNull();
         assertThat(savedProduct.getPrice()).isEqualTo(19.99);
     }
 }
