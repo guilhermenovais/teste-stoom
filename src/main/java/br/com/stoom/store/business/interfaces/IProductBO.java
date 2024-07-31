@@ -14,6 +14,8 @@ public interface IProductBO {
 
     List<Product> getProductsByCategory(Long categoryId);
 
+    List<Product> getProductsByBrand(Long brandId);
+
     Product saveProduct(Product product);
 
     Optional<Product> updateProduct(Long id, Product product);

@@ -1,8 +1,10 @@
 package br.com.stoom.store.business;
 
 import br.com.stoom.store.business.interfaces.IProductBO;
+import br.com.stoom.store.data.model.Brand;
 import br.com.stoom.store.data.model.Category;
 import br.com.stoom.store.data.model.Product;
+import br.com.stoom.store.repository.BrandRepository;
 import br.com.stoom.store.repository.CategoryRepository;
 import br.com.stoom.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ProductBO implements IProductBO {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
     @Override
     public List<Product> findAll() {
         return productRepository.findAll();
@@ -36,6 +41,16 @@ public class ProductBO implements IProductBO {
         Optional<Category> category = categoryRepository.findById(categoryId);
         if (category.isPresent()) {
             return productRepository.findByCategory(categoryId);
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<Product> getProductsByBrand(Long brandId) {
+        Optional<Brand> brand = brandRepository.findById(brandId);
+        if (brand.isPresent()) {
+            return productRepository.findByBrand(brandId);
         } else {
             return Collections.emptyList();
         }

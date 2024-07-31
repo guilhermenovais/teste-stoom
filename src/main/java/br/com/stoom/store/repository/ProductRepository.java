@@ -15,4 +15,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHERE p.enabled = true AND c.enabled = true AND b.enabled = true " +
             "AND c.id = :categoryId")
     List<Product> findByCategory(@Param("categoryId") Long categoryId);
+
+    @Query("SELECT p FROM Product p " +
+            "JOIN p.category c " +
+            "JOIN p.brand b " +
+            "WHERE p.enabled = true AND c.enabled = true AND b.enabled = true " +
+            "AND b.id = :brandId")
+    List<Product> findByBrand(@Param("brandId") Long brandId);
 }

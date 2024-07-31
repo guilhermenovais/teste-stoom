@@ -64,10 +64,22 @@ public class ProductController {
         return ResponseEntity.ok(productsDto);
     }
 
+    @GetMapping("by-brand/{brandId}")
+    public ResponseEntity<List<ProductGetDto>> listProductsByBrand(
+            @PathVariable("brandId") Long brandId
+    ) {
+        List<Product> products = productService.getProductsByBrand(brandId);
+        List<ProductGetDto> productsDto = mapstructMapper.productsToProductsGetDto(products);
+        if (productsDto.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(productsDto);
+    }
+
     @PostMapping(value = "/")
     public ResponseEntity<ProductGetDto> createProduct(@Valid @RequestBody ProductPostDto productPostDto) {
         Product newProduct = productService.saveProduct(
-                mapstructMapper.productPostDtoToProduct(productPostDto)
+            mapstructMapper.productPostDtoToProduct(productPostDto)
         );
         ProductGetDto newProductDto = mapstructMapper.productToProductGetDto(newProduct);
         logger.info(newProductDto.toString());
